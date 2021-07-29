@@ -7,6 +7,7 @@ import classes from './AddUser.module.css';
 const AddUser = (props) => {
 	const nameInputRef = useRef();
 	const ageInputRef = useRef();
+	const positionInputRef = useRef();
 
 	// const [enteredUsername, setEnteredUsername] = useState('');
 	// const [enteredAge, setEnteredAge] = useState('');
@@ -14,8 +15,10 @@ const AddUser = (props) => {
 
 	const addUserHandler = (event) => {
 		event.preventDefault();
-		const enteredName = nameInputRef.current.value
-		const enteredUserAge = ageInputRef.current.value
+		const enteredName = nameInputRef.current.value;
+		const enteredUserAge = ageInputRef.current.value;
+		const enteredPosition = positionInputRef.current.value;
+
 		if (enteredName.trim().length === 0 || enteredUserAge.trim().length === 0) {
 			setError({
 				title: 'Invalid Input',
@@ -30,9 +33,17 @@ const AddUser = (props) => {
 			});
 			return;
 		} // + before a variable forces it to be read as a number not a string
-		props.onAddUser(enteredName, enteredUserAge);
-		nameInputRef.current.value = ''
-		ageInputRef.current.value = ''
+		if (enteredPosition.trim().length === 0) {
+			setError({
+				title: 'Invalid Input',
+				message: 'Please enter a position',
+			});
+			return;
+		}
+		props.onAddUser(enteredName, enteredUserAge, enteredPosition);
+		nameInputRef.current.value = '';
+		ageInputRef.current.value = '';
+		positionInputRef.current.value = '';
 		// setEnteredUsername('');
 		// setEnteredAge('');
 	};
@@ -46,7 +57,7 @@ const AddUser = (props) => {
 
 	const errorHandler = () => {
 		setError(null);
-        // setEnteredUsername('');
+		// setEnteredUsername('');
 		// setEnteredAge('');
 	};
 
@@ -77,6 +88,8 @@ const AddUser = (props) => {
 						// onChange={ageChangeHandler}
 						ref={ageInputRef}
 					/>
+					<label htmlFor='position'>Position</label>
+					<input id='position' type='text' ref={positionInputRef} />
 					<Button type='submit'>Add User</Button>
 				</form>
 			</Card>
