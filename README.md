@@ -1,1 +1,3 @@
 Simple project to stay fresh in React...
+
+Utilize state and refs in AddUser component - currently the state aspects are commented out
